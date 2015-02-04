@@ -12,37 +12,13 @@
 
     $('#progressbar').hide();
 
-    var processGreenscreen = function(frames, next){
-        for(var i in frames){
-            var data = frames[i].data;
-            var start = {
-                red: data[0],
-                green: data[1],
-                blue: data[2]
-            };
-
-            var tolerance = 150;
-            for(var j = 0, n = data.length; j < n; j += 4) {
-                var diff = Math.abs(data[j] - data[0]) + Math.abs(data[j+1] - data[1]) + Math.abs(data[j+2] - data[2]);
-                if(diff < tolerance) {
-                    data[j + 3] = 0;
-                }
-            }
-
-            frames[i].data = data;
-        }
-
-        gifs.push(frames);
-        next();
-    };
-
     $(document.body).on('click', '#create', function(e){
         e.preventDefault();
         $(this).hide();
         $('.preview').hide();
         if(state == 0){
-            $('.prep').show();
             $('#myvideo').show();
+            $('.prep').show();
             gifshot.createGIF({
                 keepCameraOn:true,
                 webcamVideoElement: $('#myvideo')[0],
@@ -54,7 +30,7 @@
                 stream = obj.cameraStream;
 
                 gifshot.createGIF({
-                    'video': ['knife.mp4', 'knife.ogv'],
+                    'video': ['fireworks.mp4', 'fireworks.ogv'],
                     gifWidth: 400,
                     gifHeight: 400,
                     keepCameraOn:true,
@@ -63,16 +39,15 @@
                     saveRenderingContexts:true,
                     numFrames:30
                 }, function(obj){
-                    processGreenscreen(obj.savedRenderingContexts, function(){
-                        $('.prep').hide();
-                        state++;
-                        link.text('Create your first GIF');
-                        link.show();
-                    });
+                    $('.prep').hide();
+                    gifs.push(obj.savedRenderingContexts);
+                    state++;
+                    link.text('Create your first GIF');
+                    link.show();
                 });
             });
         }
-        else if(state == 1){
+        else if(state > 0 && state < 3){
             $('#myvideo').show();
             gifshot.createGIF({
                 gifWidth: 400,
@@ -95,7 +70,11 @@
                 $( "#progressbar" ).hide();
                 state++;
                 if(state == 2){
-                    link.text('Create Final Gif');
+                    link.text('Create your second GIF');
+                    link.show();
+                }
+                if(state == 3){
+                    link.text('Create your final GIF');
                     link.show();
                 }
                 if(!obj.error) {
@@ -110,25 +89,18 @@
             });
         } else {
             var frames = [];
-            var canvas = document.createElement('canvas');
-            canvas.width=400;
-            canvas.height=400;
-            var context = canvas.getContext('2d');
 
             for(var i = 0; i < 30; i++){
-                for(var j = 0, n = gifs[1][i].data.length; j < n; j += 4) {
-                    if(gifs[0][i].data[j+3] > 0){
-                        gifs[1][i].data[j] = gifs[0][i].data[j];
-                        gifs[1][i].data[j+1] = gifs[0][i].data[j+1];
-                        gifs[1][i].data[j+2] = gifs[0][i].data[j+2];
-                        gifs[1][i].data[j+3] = gifs[0][i].data[j+3];
-                    }
-                }
                 frames.push(gifs[1][i]);
-                context.putImageData(gifs[1][i], 0, 0);
             }
 
+            for(var i = 0; i < 30; i++){
+                frames.push(gifs[0][i]);
+            }
 
+            for(var i = 0; i < 30; i++){
+                frames.push(gifs[2][i]);
+            }
 
             gifshot.createGIF({
                 gifWidth: 400,
