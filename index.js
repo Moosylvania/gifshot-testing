@@ -11,4 +11,4 @@ app.use(bodyParser.urlencoded({
 }));
 
 var server = require('http').Server(app);
-server.listen(8080);
+server.listen(process.env.PORT || 8080);
