@@ -87,12 +87,12 @@
             $('#myvideo').show();
             var counttime = 3;
             var theinterval = setInterval(function(){
-                $('.counter').text('Starting in: '+counttime);
-                counttime--;
                 if(counttime == 0){
                     $('.counter').hide();
                     clearInterval(theinterval);
                 }
+                $('.counter').text('Starting in: '+counttime);
+                counttime--;                
             }, 1000);
             setTimeout(function(){
                 gifshot.createGIF({
