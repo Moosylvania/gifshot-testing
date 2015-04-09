@@ -35,12 +35,12 @@
         return Math.random() * (max - min) + min;
     }
 
-    var sourcetype = Math.round(getRandomArbitrary(0,2));
+    var sourcetype = Math.round(getRandomArbitrary(0,3));
 
     var disco = '/sapporo-frames.png';
     var tokyo = '/spritesheet-toyko.png';
     var ball = '/discoball_spritesheet.png';
-
+    var beyonce = '/diva_spritesheet.png';
     var sources = {};
 
     switch(sourcetype){
@@ -52,6 +52,9 @@
             break;
         case 2:
             sources.sapporo = ball;
+            break;
+        case 3:
+            sources.sapporo = beyonce;
             break;
     }
 
@@ -156,6 +159,10 @@
                                         case 2:
                                             context = drawText(context, "top", "DISCO ISN'T", 300, 300);
                                             context = drawText(context, "bottom", "DEAD!", 300, 300);
+                                            break;
+                                        case 3:
+                                            context = drawText(context, "top", "HEY LOOK", 300, 300);
+                                            context = drawText(context, "bottom", "I'M BEYONCE", 300, 300);
                                             break;
                                     }
 
