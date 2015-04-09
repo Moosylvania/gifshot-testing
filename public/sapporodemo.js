@@ -85,41 +85,53 @@
             });
         } else if (state == 1) {
             $('#myvideo').show();
-            gifshot.createGIF({
-                gifWidth: 300,
-                gifHeight: 300,
-                numFrames: 10,
-                interval: 0.1,
-                saveRenderingContexts: true,
-                keepCameraOn: true,
-                webcamVideoElement: $('#myvideo')[0],
-                cameraStream: stream,
-                numWorkers: 2,
-                progressCallback: function(captureProgress) {
-                    $("#progressbar").show();
-                    $("#progressbar").progressbar("option", "value", captureProgress * 100);
-                    if (captureProgress == 1) {
-                        $('#myvideo').hide();
-                        $("#progressbar").progressbar("option", "value", false);
+            var counttime = 3;
+            var theinterval = setInterval(function(){
+                $('.counter').text('Starting in: '+counttime);
+                counttime--;
+                if(counttime == 0){
+                    $('.counter').hide();
+                    clearInterval(theinterval);
+                }
+            }, 1000);
+            setTimeout(function(){
+                gifshot.createGIF({
+                    gifWidth: 300,
+                    gifHeight: 300,
+                    numFrames: 10,
+                    interval: 0.1,
+                    saveRenderingContexts: true,
+                    keepCameraOn: true,
+                    webcamVideoElement: $('#myvideo')[0],
+                    cameraStream: stream,
+                    numWorkers: 2,
+                    progressCallback: function(captureProgress) {
+                        $("#progressbar").show();
+                        $("#progressbar").progressbar("option", "value", captureProgress * 100);
+                        if (captureProgress == 1) {
+                            $('#myvideo').hide();
+                            $("#progressbar").progressbar("option", "value", false);
+                        }
                     }
-                }
-            }, function(obj) {
-                $("#progressbar").hide();
-                state++;
-                if (state == 2) {
-                    link.text('Create Final Gif');
-                    link.show();
-                }
-                if (!obj.error) {
-                    gifState = obj.savedRenderingContexts;
-                    var img = document.createElement('img');
-                    img.src = obj.image;
-                    $('.preview div').before(img);
-                    $('.preview').show();
-                } else {
-                    console.log(obj.error);
-                }
-            });
+                }, function(obj) {
+                    $("#progressbar").hide();
+                    state++;
+                    if (state == 2) {
+                        link.text('Create Final Gif');
+                        link.show();
+                    }
+                    if (!obj.error) {
+                        gifState = obj.savedRenderingContexts;
+                        var img = document.createElement('img');
+                        img.src = obj.image;
+                        $('.preview div').before(img);
+                        $('.preview').show();
+                    } else {
+                        console.log(obj.error);
+                    }
+                });
+            }, 3200);
+
         } else {
             var frames = [];
             var canvas = document.createElement('canvas');
