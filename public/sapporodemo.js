@@ -88,7 +88,7 @@
             gifshot.createGIF({
                 gifWidth: 300,
                 gifHeight: 300,
-                numFrames: 20,
+                numFrames: 10,
                 interval: 0.1,
                 saveRenderingContexts: true,
                 keepCameraOn: true,
@@ -128,17 +128,10 @@
             var context = canvas.getContext('2d');
 
             loadImages(sources, function(images) {
-                for(var i = 0; i<20; i++){
+                for(var i = 0; i<10; i++){
                     context.putImageData(gifState[i], 0, 0);
-                    if(i == 0){
-                        context.drawImage(images.sapporo, 0, 0);
-                    } else if(i < 10){
-                        context.drawImage(images.sapporo, 0, ((i)*-300));
-                    } else if(i < 18){
-                        context.drawImage(images.sapporo, 0, ((19-i)*-300));
-                    } else {
-                        context.drawImage(images.sapporo, 0, 0);
-                    }
+
+                    context.drawImage(images.sapporo, 0, ((i)*-300));
 
                     context = drawText(context, "top", "WTF", 300, 300);
                     context = drawText(context, "bottom", "IT WORKS!", 300, 300);
@@ -146,13 +139,18 @@
                     frames.push(context.getImageData(0,0,300,300));
                 }
 
+                var finalframes = frames.slice(0);
+
+                frames.reverse();
+                finalframes = finalframes.concat(frames);
+
                 gifshot.createGIF({
                     gifWidth: 300,
                     gifHeight: 300,
-                    numFrames: frames.length,
+                    numFrames: finalframes.length,
                     interval:0.1,
                     saveRenderingContexts: true,
-                    savedRenderingContexts: frames,
+                    savedRenderingContexts: finalframes,
                     numWorkers: 2,
                     progressCallback: function(captureProgress) {
                         $("#progressbar").show();
@@ -162,8 +160,7 @@
                             $("#progressbar").progressbar("option", "value", false);
                         }
                     }
-                }, function(obj) {
-                    console.log(obj);
+                }, function(obj) {                    
                     $("#progressbar").hide();
                     var img = document.createElement('img');
                     img.src = obj.image;
