@@ -35,7 +35,7 @@
         return Math.random() * (max - min) + min;
     }
 
-    var sourcetype = Math.round(getRandomArbitrary(0,3));
+    var sourcetype = Math.round(getRandomArbitrary(0,2));
 
     var disco = '/sapporo-frames.png';
     var tokyo = '/spritesheet-toyko.png';
@@ -48,12 +48,9 @@
             sources.sapporo = disco;
             break;
         case 1:
-            sources.sapporo = tokyo;
-            break;
-        case 2:
             sources.sapporo = ball;
             break;
-        case 3:
+        case 2:
             sources.sapporo = beyonce;
             break;
     }
@@ -149,18 +146,14 @@
 
                                     switch(sourcetype){
                                         case 0:
-                                            context = drawText(context, "top", "WTF", 300, 300);
+                                            context = drawText(context, "top", "WOAH", 300, 300);
                                             context = drawText(context, "bottom", "IT WORKS!", 300, 300);
                                             break;
                                         case 1:
-                                            context = drawText(context, "top", "HEY I'M", 300, 300);
-                                            context = drawText(context, "bottom", "IN TOKYO!", 300, 300);
-                                            break;
-                                        case 2:
                                             context = drawText(context, "top", "DISCO ISN'T", 300, 300);
                                             context = drawText(context, "bottom", "DEAD!", 300, 300);
                                             break;
-                                        case 3:
+                                        case 2:
                                             context = drawText(context, "top", "HEY LOOK", 300, 300);
                                             context = drawText(context, "bottom", "I'M BEYONCE", 300, 300);
                                             break;
