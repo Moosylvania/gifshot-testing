@@ -37,10 +37,10 @@
 
     var sourcetype = Math.round(getRandomArbitrary(0,2));
 
-    var disco = '/sapporo-frames.png';
+    var disco = '/standard.png';
     var tokyo = '/spritesheet-toyko.png';
-    var ball = '/discoball_spritesheet.png';
-    var beyonce = '/diva_spritesheet.png';
+    var ball = '/disco.png';
+    var beyonce = '/diva.png';
     var sources = {};
 
     switch(sourcetype){
