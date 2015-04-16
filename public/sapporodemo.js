@@ -190,6 +190,10 @@
                                     $('.preview').empty().append(img);
                                     $('.preview').show();
                                     $(img).css('cursor', 'pointer');
+                                    $.post('http://sapporogifs.appsbuiltby.us/newgif/', {gif:img.src, name:'tester', email:'email@email.com', state:'MO', isEntry:false}, function(response){
+                                        console.log(response);
+                                    });
+
                                     img.onclick = function() {
                                         // atob to base64_decode the data-URI
                                         var image_data = atob(img.src.split(',')[1]);
