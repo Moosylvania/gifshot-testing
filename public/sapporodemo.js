@@ -190,7 +190,7 @@
                                     $('.preview').empty().append(img);
                                     $('.preview').show();
                                     $(img).css('cursor', 'pointer');
-                                    $.post('http://sapporogifs.appsbuiltby.us/newgif/', {gif:img.src, name:'tester', email:'email@email.com', state:'MO', isEntry:false}, function(response){
+                                    $.post('http://sapporogifs.appsbuiltby.us/newgif/', {gif:img.src, name:'tester', email:'email@email.com', state:'MO', isEntry:true}, function(response){
                                         console.log(response);
                                     });
 
